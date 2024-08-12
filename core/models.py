@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.core.validators import MinValueValidator, URLValidator
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 
 class BaseModel(models.Model):
@@ -173,14 +174,17 @@ class Job(BaseModel):
     def clean(self):
         if self.salary_highest and self.salary_lowest:
             if self.salary_highest < self.salary_lowest:
-                raise models.ValidationError(
+                raise ValidationError(
                     "Highest salary must be greater than or equal to lowest salary."
                 )
 
     def save(self, *args, **kwargs):
         if not self.slug:
+            super().save(*args, **kwargs)
             self.slug = slugify(f"{self.title}-{self.company.name}-{self.id}")
-        super().save(*args, **kwargs)
+            super().save(update_fields=["slug"])
+        else:
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.title} at {self.company.name}"
