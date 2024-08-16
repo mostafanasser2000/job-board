@@ -5,7 +5,6 @@ from django.utils.text import slugify
 
 
 class IndustryModelTest(TestCase):
-
     def test_industry_creation(self):
         industry = Industry.objects.create(name="Technology")
         self.assertEqual(industry.name, "Technology")

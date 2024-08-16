@@ -6,98 +6,257 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Industry',
+            name="Industry",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=200, unique=True)),
-                ('slug', models.SlugField(blank=True, max_length=300, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=200, unique=True)),
+                ("slug", models.SlugField(blank=True, max_length=300, unique=True)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Location',
+            name="Location",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('city', models.CharField(max_length=100)),
-                ('country', models.CharField(max_length=100)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
+                ("city", models.CharField(max_length=100)),
+                ("country", models.CharField(max_length=100)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Skill',
+            name="Skill",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=100, unique=True)),
-                ('slug', models.SlugField(blank=True, max_length=100, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=100, unique=True)),
+                ("slug", models.SlugField(blank=True, max_length=100, unique=True)),
             ],
             options={
-                'verbose_name': 'Skill',
-                'verbose_name_plural': 'Skills',
-                'ordering': ['name'],
+                "verbose_name": "Skill",
+                "verbose_name_plural": "Skills",
+                "ordering": ["name"],
             },
         ),
         migrations.CreateModel(
-            name='Company',
+            name="Company",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('logo', models.ImageField(upload_to='companies/%Y/%m/%d/')),
-                ('name', models.CharField(max_length=200, unique=True)),
-                ('slug', models.SlugField(blank=True, unique=True)),
-                ('company_site', models.URLField(blank=True, null=True, validators=[django.core.validators.URLValidator()])),
-                ('about', models.TextField(blank=True, null=True)),
-                ('company_size', models.PositiveIntegerField(blank=True, choices=[(1, '1-10'), (2, '11-50'), (3, '51-200'), (4, '201-500'), (5, '501-1000'), (6, '1001+')], null=True, validators=[django.core.validators.MinValueValidator(1)])),
-                ('linkedin_page', models.URLField(blank=True, null=True, validators=[django.core.validators.URLValidator()])),
-                ('industries', models.ManyToManyField(related_name='companies', to='core.industry')),
-                ('location', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='companies', to='core.location')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
+                ("logo", models.ImageField(upload_to="companies/%Y/%m/%d/")),
+                ("name", models.CharField(max_length=200, unique=True)),
+                ("slug", models.SlugField(blank=True, unique=True)),
+                (
+                    "company_site",
+                    models.URLField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.URLValidator()],
+                    ),
+                ),
+                ("about", models.TextField(blank=True, null=True)),
+                (
+                    "company_size",
+                    models.PositiveIntegerField(
+                        blank=True,
+                        choices=[
+                            (1, "1-10"),
+                            (2, "11-50"),
+                            (3, "51-200"),
+                            (4, "201-500"),
+                            (5, "501-1000"),
+                            (6, "1001+"),
+                        ],
+                        null=True,
+                        validators=[django.core.validators.MinValueValidator(1)],
+                    ),
+                ),
+                (
+                    "linkedin_page",
+                    models.URLField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.URLValidator()],
+                    ),
+                ),
+                (
+                    "industries",
+                    models.ManyToManyField(
+                        related_name="companies", to="core.industry"
+                    ),
+                ),
+                (
+                    "location",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="companies",
+                        to="core.location",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Company',
-                'verbose_name_plural': 'Companies',
-                'ordering': ['-created'],
+                "verbose_name": "Company",
+                "verbose_name_plural": "Companies",
+                "ordering": ["-created"],
             },
         ),
         migrations.CreateModel(
-            name='Job',
+            name="Job",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('title', models.CharField(max_length=200)),
-                ('slug', models.SlugField(blank=True, max_length=250, unique=True)),
-                ('description', models.TextField()),
-                ('workplace_type', models.CharField(choices=[('remote', 'Remote'), ('hybrid', 'Hybrid'), ('on-site', 'On-site')], max_length=20)),
-                ('work_type', models.CharField(choices=[('full_time', 'Full Time'), ('part_time', 'Part Time'), ('internship', 'Internship'), ('contract', 'Contract')], max_length=20)),
-                ('salary_lowest', models.PositiveIntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
-                ('salary_highest', models.PositiveIntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
-                ('salary_currency', models.CharField(choices=[('USD', 'US Dollar'), ('EUR', 'Euro'), ('GBP', 'British Pound')], default='USD', max_length=3)),
-                ('apply_link', models.URLField(blank=True, null=True, validators=[django.core.validators.URLValidator()])),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='jobs', to='core.company')),
-                ('location', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='jobs', to='core.location')),
-                ('skills_required', models.ManyToManyField(related_name='jobs', to='core.skill')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
+                ("title", models.CharField(max_length=200)),
+                ("slug", models.SlugField(blank=True, max_length=250, unique=True)),
+                ("description", models.TextField()),
+                (
+                    "workplace_type",
+                    models.CharField(
+                        choices=[
+                            ("remote", "Remote"),
+                            ("hybrid", "Hybrid"),
+                            ("on-site", "On-site"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "work_type",
+                    models.CharField(
+                        choices=[
+                            ("full_time", "Full Time"),
+                            ("part_time", "Part Time"),
+                            ("internship", "Internship"),
+                            ("contract", "Contract"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "salary_lowest",
+                    models.PositiveIntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                    ),
+                ),
+                (
+                    "salary_highest",
+                    models.PositiveIntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                    ),
+                ),
+                (
+                    "salary_currency",
+                    models.CharField(
+                        choices=[
+                            ("USD", "US Dollar"),
+                            ("EUR", "Euro"),
+                            ("GBP", "British Pound"),
+                        ],
+                        default="USD",
+                        max_length=3,
+                    ),
+                ),
+                (
+                    "apply_link",
+                    models.URLField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.URLValidator()],
+                    ),
+                ),
+                (
+                    "company",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="jobs",
+                        to="core.company",
+                    ),
+                ),
+                (
+                    "location",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="jobs",
+                        to="core.location",
+                    ),
+                ),
+                (
+                    "skills_required",
+                    models.ManyToManyField(related_name="jobs", to="core.skill"),
+                ),
             ],
             options={
-                'ordering': ['-created'],
-                'indexes': [models.Index(fields=['title', 'company', 'location'], name='core_job_title_24d747_idx'), models.Index(fields=['-created'], name='core_job_created_efa7cb_idx')],
+                "ordering": ["-created"],
+                "indexes": [
+                    models.Index(
+                        fields=["title", "company", "location"],
+                        name="core_job_title_24d747_idx",
+                    ),
+                    models.Index(
+                        fields=["-created"], name="core_job_created_efa7cb_idx"
+                    ),
+                ],
             },
         ),
     ]
