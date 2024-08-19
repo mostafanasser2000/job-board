@@ -18,10 +18,6 @@ class Migration(migrations.Migration):
             model_name='job',
             name='location',
         ),
-        migrations.RemoveIndex(
-            model_name='job',
-            name='core_job_title_24d747_idx',
-        ),
         migrations.AddIndex(
             model_name='job',
             index=models.Index(fields=['title', 'company'], name='core_job_title_c40e5c_idx'),
