@@ -28,12 +28,12 @@ class Industry(BaseModel):
         return self.name
 
 
-class Location(BaseModel):
-    city = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
+# class Location(BaseModel):
+#     city = models.CharField(max_length=100)
+#     country = models.CharField(max_length=100)
 
-    def __str__(self):
-        return f"{self.city}, {self.country}"
+#     def __str__(self):
+#         return f"{self.city}, {self.country}"
 
 
 class Company(BaseModel):
@@ -58,9 +58,9 @@ class Company(BaseModel):
     )
     linkedin_page = models.URLField(blank=True, null=True, validators=[URLValidator()])
     industries = models.ManyToManyField(Industry, related_name="companies")
-    location = models.ForeignKey(
-        Location, on_delete=models.SET_NULL, null=True, related_name="companies"
-    )
+    # location = models.ForeignKey(
+    #     Location, on_delete=models.SET_NULL, null=True, related_name="companies"
+    # )
 
     class Meta:
         ordering = ["-created"]
@@ -148,9 +148,9 @@ class Job(BaseModel):
     skills_required = models.ManyToManyField(Skill, related_name="jobs")
     workplace_type = models.CharField(max_length=20, choices=WORKPLACE_TYPES)
     work_type = models.CharField(max_length=20, choices=WORK_TYPES)
-    location = models.ForeignKey(
-        Location, on_delete=models.SET_NULL, null=True, related_name="jobs"
-    )
+    # location = models.ForeignKey(
+    #     Location, on_delete=models.SET_NULL, null=True, related_name="jobs"
+    # )
     salary_lowest = models.PositiveIntegerField(
         blank=True, null=True, validators=[MinValueValidator(0)]
     )
@@ -167,7 +167,7 @@ class Job(BaseModel):
     class Meta:
         ordering = ["-created"]
         indexes = [
-            models.Index(fields=["title", "company", "location"]),
+            models.Index(fields=["title", "company"]),
             models.Index(fields=["-created"]),
         ]
 
