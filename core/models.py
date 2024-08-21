@@ -45,7 +45,7 @@ class Company(BaseModel):
         (5, "501-1000"),
         (6, "1001+"),
     ]
-    logo = models.ImageField(upload_to="companies/%Y/%m/%d/")
+    logo = models.ImageField(upload_to="media/companies/%Y/%m/%d/")
     name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(unique=True, blank=True, db_index=True)
     company_site = models.URLField(blank=True, null=True, validators=[URLValidator()])
