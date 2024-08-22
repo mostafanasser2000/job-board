@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{% if job %}Edit {%else%}New {% endif %}Job
+{% endblock title %}
+  
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  {{form|crispy}}
+  <input type="submit" value="{%if job%}Update{%else%}Add{%endif%}" class="btn btn-primary">
+</form>  
+{% endblock content %}

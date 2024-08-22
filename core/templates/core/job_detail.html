@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ job.title|upper }}
+{% endblock title %}
+
+{% block content %}
+<div class="job-details">
+    <h1>{{ job.title }}</h1>
+    <h3>{{ job.company }}</h3>
+    <p><strong>Description:</strong></p>
+    <p>{{ job.description }}</p>
+
+    <div class="job-meta">
+        <p><strong>Workplace Type:</strong> {{ job.get_work_type_display }}</p>
+        <p><strong>Work Type:</strong> {{ job.get_workplace_type_display }}</p>
+        <p><strong>Salary Range:</strong> {{ job.salary_range }}</p>
+    </div>
+
+    <div class="skills-required">
+        <p><strong>Skills Required:</strong></p>
+        <ul>
+            {% for skill in job.skills_required.all %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="apply-link">
+        <a href="{{ job.apply_link }}" class="btn btn-primary">Apply Now</a>
+    </div>
+</div>
+{% endblock content %}
