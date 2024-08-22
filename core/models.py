@@ -4,7 +4,7 @@ from django.utils.text import slugify
 from django.core.validators import MinValueValidator, URLValidator
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-
+from ckeditor.fields import RichTextField
 
 class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -144,7 +144,7 @@ class Job(BaseModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
     company = models.ForeignKey(Company, related_name="jobs", on_delete=models.CASCADE)
-    description = models.TextField()
+    description = RichTextField()
     skills_required = models.ManyToManyField(Skill, related_name="jobs")
     workplace_type = models.CharField(max_length=20, choices=WORKPLACE_TYPES)
     work_type = models.CharField(max_length=20, choices=WORK_TYPES)

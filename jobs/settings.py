@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Local Apps
     "core.apps.CoreConfig",
-    # 3d party app
+    # 3d party apps
     "crispy_forms",
     "crispy_bootstrap5",
+    "ckeditor",
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Crispy forms settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# ckeditor configs
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+        'extraPlugins': ','.join([
+            'codesnippet',
+            'widget',
+            'dialog',
+        ]),
+    },
+}

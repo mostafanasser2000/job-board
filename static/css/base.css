@@ -1,3 +1,8 @@
 body {
   font-family: Roboto;
 }
+
+#div_id_description {
+  display: flex;
+  flex-direction: column;
+}
