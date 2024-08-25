@@ -139,7 +139,7 @@ CKEDITOR_CONFIGS = {
         'height': 300,
         'width': '100%',
         'extraPlugins': ','.join([
-            'codesnippet',
+            # 'codesnippet',
             'widget',
             'dialog',
         ]),
