@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Job, Industry, Company, Skill
+from .models import Country, City, Currency, Industry
 
 # Register your models here.
-admin.site.register(Job)
+admin.site.register(Country)
+admin.site.register(City)
+admin.site.register(Currency)
 admin.site.register(Industry)
-admin.site.register(Company)
-admin.site.register(Skill)

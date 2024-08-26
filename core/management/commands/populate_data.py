@@ -1,35 +1,27 @@
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
-from core.models import Industry, Location, Skill
+from core.models import Industry, Country, City, Currency
 
 
 class Command(BaseCommand):
-    help = "Populate database with industries, locations and skills"
+    help = "Populate database with industries, countries, cities, currencies"
 
     def add_arguments(self, parser):
-        parser.add_argument("--locations", type=str, help="Path to locations file")
-        parser.add_argument("--skills", type=str, help="Path to skills file")
+        parser.add_argument("--industry", type=str, help="Path to industries file")
+        parser.add_argument("--country", type=str, help="Path to countries file")
+        parser.add_argument("--city", type=str, help="Path to cities file")
+        parser.add_argument("--currency", type=str, help="Path to currencies file")
 
     def handle(self, *args, **options):
-        if options["locations"]:
-            self.populate_locations(options["locations"])
 
-        if options["skills"]:
-            self.populate_skills(options["skills"])
-
-        if options["industries"]:
-            self.populate_industries(options["industries"])
-
-    def populate_locations(self, file_path):
-        pass
-
-    def populate_skills(self, file_path):
-        with open(file_path, "r") as file:
-            skills = file.read().split("\n")
-            for skill in skills:
-                Skill.objects.get_or_create(name=skill)
-
-        self.stdout.write(self.style.SUCCESS("Successfully added skills to database"))
+        if options["industry"]:
+            self.populate_industries(options["industry"])
+        if options["country"]:
+            self.populate_countries(options["country"])
+        if options["city"]:
+            self.populate_cities(options["city"])
+        if options["currency"]:
+            self.populate_currencies(options["currency"])
 
     def populate_industries(self, file_path):
         with open(file_path, "r") as file:
@@ -40,3 +32,12 @@ class Command(BaseCommand):
         self.stdout.write(
             self.style.SUCCESS("Successfully added industries to database")
         )
+
+    def populate_countries(self, file_path):
+        pass
+
+    def populate_cities(self, file_path):
+        pass
+
+    def populate_currencies(self, file_path):
+        pass

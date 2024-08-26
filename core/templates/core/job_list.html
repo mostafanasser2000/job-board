@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block title %}
-  Jobs
-{% endblock title %}
-{% block content %}
-  {% for job in  jobs%}
-    <a href="{{job.get_absolute_url}}">{{job.title}}</a>
-  {% endfor %}
-{% endblock content %}
