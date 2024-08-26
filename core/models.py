@@ -10,7 +10,7 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class Industry(BaseModel):
+class Industry(models.Model):
     name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=300, unique=True, blank=True)
 
@@ -24,7 +24,7 @@ class Industry(BaseModel):
         return self.name
 
 
-class Country(BaseModel):
+class Country(models.Model):
     name = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(blank=True)
 
@@ -34,7 +34,7 @@ class Country(BaseModel):
         super().save(*args, *kwargs)
 
 
-class City(BaseModel):
+class City(models.Model):
     name = models.CharField(max_length=250)
     slug = models.SlugField(blank=True)
     country = models.ForeignKey(
@@ -47,6 +47,6 @@ class City(BaseModel):
         super().save(*args, *kwargs)
 
 
-class Currency(BaseModel):
+class Currency(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=10)
