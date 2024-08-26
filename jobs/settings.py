@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Local Apps
     "core.apps.CoreConfig",
+    "accounts.apps.AccountsConfig",
+    "posts.apps.PostsConfig",
     # 3d party apps
     "crispy_forms",
     "crispy_bootstrap5",
@@ -86,7 +88,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -104,8 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
-
+# AUTHENTICATION CONFIGS
+AUTH_USER_MODEL = "accounts.CustomUser"
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -134,14 +135,16 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # ckeditor configs
 CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'height': 300,
-        'width': '100%',
-        'extraPlugins': ','.join([
-            # 'codesnippet',
-            'widget',
-            'dialog',
-        ]),
+    "default": {
+        "toolbar": "full",
+        "height": 300,
+        "width": "100%",
+        "extraPlugins": ",".join(
+            [
+                # 'codesnippet',
+                "widget",
+                "dialog",
+            ]
+        ),
     },
 }
