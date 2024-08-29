@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Local Apps put here to handel password change and password reset templates correctly
+    "accounts.apps.AccountsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -39,7 +41,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Local Apps
     "core.apps.CoreConfig",
-    "accounts.apps.AccountsConfig",
     "posts.apps.PostsConfig",
     # 3d party apps
     "crispy_forms",
@@ -107,6 +108,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 # AUTHENTICATION CONFIGS
 AUTH_USER_MODEL = "accounts.CustomUser"
+# LOGIN_REDIRECT_URL = "home"
+# LOGIN_URL = "login"
+# LOGOUT_URL = "logout"
+
+# for sending emails
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_PORT = 25
+EMAIL_USE_TLS = False
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# settings for letting users logged in with email 
+AUTHENTICATION_BACKENDS = [
+    "accounts.authentication.EmailAuthBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -122,8 +138,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
