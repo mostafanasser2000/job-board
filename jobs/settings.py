@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "ckeditor",
+    "cities_light",
+    "django_select2",
 ]
 
 MIDDLEWARE = [
@@ -108,9 +110,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 # AUTHENTICATION CONFIGS
 AUTH_USER_MODEL = "accounts.CustomUser"
-# LOGIN_REDIRECT_URL = "home"
-# LOGIN_URL = "login"
-# LOGOUT_URL = "logout"
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "job_list"
+LOGOUT_URL = "logout"
+LOGIN_REDIRECT_URL = "job_list"
 
 # for sending emails
 EMAIL_HOST = "smtp.gmail.com"
@@ -118,7 +121,7 @@ EMAIL_HOST_PORT = 25
 EMAIL_USE_TLS = False
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# settings for letting users logged in with email 
+# settings for letting users logged in with email
 AUTHENTICATION_BACKENDS = [
     "accounts.authentication.EmailAuthBackend",
     "django.contrib.auth.backends.ModelBackend",
