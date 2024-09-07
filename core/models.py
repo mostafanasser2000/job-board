@@ -23,30 +23,9 @@ class Industry(models.Model):
     def __str__(self) -> str:
         return self.name
 
-
-class Country(models.Model):
-    name = models.CharField(max_length=250, unique=True)
-    slug = models.SlugField(blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug or slugify(self.name) != self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, *kwargs)
-
-
-class City(models.Model):
-    name = models.CharField(max_length=250)
-    slug = models.SlugField(blank=True)
-    country = models.ForeignKey(
-        Country, related_name="cities", on_delete=models.CASCADE
-    )
-
-    def save(self, *args, **kwargs):
-        if not self.slug or slugify(self.name) != self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, *kwargs)
-
-
 class Currency(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=10)
+
+    def __str__(self) -> str:
+        return f'{self.name} ({self.code})'

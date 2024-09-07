@@ -16,7 +16,7 @@ COMPANY_SIZE_CHOICES = [
 WORKPLACE_TYPES = [
     ("remote", "Remote"),
     ("hybrid", "Hybrid"),
-    ("on-site", "On-site"),
+    ("on-site", "On-Site"),
 ]
 WORK_TYPES = [
     ("full_time", "Full Time"),
