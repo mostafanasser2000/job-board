@@ -19,11 +19,11 @@ class CustomUserCreationForm(UserCreationForm):
             "is_company",
         )
 
-    # def clean_email(self):
-    #     data = self.changed_data["email"]
-    #     if UserModel.objects.filter(email=data).exists():
-    #         raise forms.ValidationError("Email already in user.")
-    #     return data
+    def clean_email(self):
+        data = self.changed_data["email"]
+        if UserModel.objects.filter(email=data).exists():
+            raise forms.ValidationError("Email already in user.")
+        return data
 
 
 class CustomUserChangeForm(UserChangeForm):
