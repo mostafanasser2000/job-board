@@ -1,22 +1,38 @@
-# job-board
+# Shoglana
+
+👟️ Shoglana a Django-based Job Portal project, combining a powerful backend with a beautiful and user-friendly frontend. 
+## Video Preview
 
 ## Tasks
-
-- [x] setup Django project and repo
-- [ ] create database models
-  - [x] JobPosting
-  - [x] Company profile
+- [] Design database models:
+  - [x] User (job seeker and employer)
+  - [x] Job Post
+  - [x] User Profile
+  - [x] Company Profile
+  - [x] Resume/CV
+  - [x] Education
+  - [x] Experience
   - [ ] Application
-  - [ ] Resume/CV
-- [ ] Implement user authentication and authorization
-- [ ] create views and template
-  - [ ] Homepage
-  - [ ] Job listings
-  - [ ] Company profiles
-  - [ ] User profiles
-  - [ ] Job application process
-  - [ ] Resume/CV upload and management
-- [ ] Develop search functionality
-  - [ ] Job search by keywords, location, category
+- [x] Implement user authentication and authorization
+- [ ] Create views, urls and templates for:
+  - [x] Job listings
+  - [x] Job details
+  - [ ] Company Profile
+  - [ ] User Profile
+  - [ ] Job Application
+  - [x] Resume/CV upload and management
   - [ ] Advanced filtering options
-  - [ ]
+  - [ ] Search functionality
+- [ ] Create an API for potential integrations with other
+- [ ] Create a responsive design for mobile compatibility
+- [ ] Optimize database queries and overall performance
+- [ ] Add a recommendation system for job matches
+- [ ] Use docker to containerize application
+
+
+
+
+## Built With
+## Preview
+## Features
+## Installation
