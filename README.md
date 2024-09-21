@@ -1,6 +1,6 @@
 # Shoglana
 
-👟️ Shoglana a Django-based Job Portal project, combining a powerful backend with a beautiful and user-friendly frontend. 
+Shoglana a Django-based Job Portal project, combining a powerful backend with a beautiful and user-friendly frontend. 
 ## Video Preview
 
 ## Tasks
