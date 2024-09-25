@@ -1,19 +1,34 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-{% block title %}
-  Log In
-{% endblock title %}
-{% block content %}
-<div class="d-flex flex-column justify-content-center align-items-center gap-2">
-  <form action="" method="post" class="form-control mb-4">
-    {% csrf_token %}
-    {{form|crispy}}
-    <input type="submit" value="Log In" class="btn btn-primary">
-  </form>
-  <div>
-    <p><a href="{% url 'signup'%}">Don't have an account?</a></p>
-    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-  </div>
-</div>
+{% load static %}
 
+{% block title %}Log In - Shoglana{% endblock title %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock styles %}
+
+{% block content %}
+<div class="container"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card auth-card">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Log In</h2>
+                    <form method="post" class="auth-form">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Log In</button>
+                        </div>
+                    </form>
+                    <div class="auth-links mt-4">
+                        <p class="text-center mb-2"><a href="{% url 'signup' %}">Don't have an account? Sign up</a></p>
+                        <p class="text-center mb-0"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

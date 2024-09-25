@@ -1,0 +1,16 @@
+.auth-card {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+}
+.auth-form .form-group {
+  margin-bottom: 20px;
+}
+.auth-form .form-control {
+  font-size: 16px;
+  padding: 12px;
+}
+.auth-form .btn {
+  font-size: 18px;
+  padding: 12px;
+}
