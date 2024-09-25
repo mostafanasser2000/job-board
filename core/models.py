@@ -23,9 +23,45 @@ class Industry(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
 class Currency(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=10)
 
     def __str__(self) -> str:
         return f'{self.name} ({self.code})'
+
+
+class Skill(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, blank=True, unique=True, db_index=True)
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = "Skill"
+        verbose_name_plural = "Skills"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField(blank=True, unique=True, db_index=True)
+
+    class Meta:
+        verbose_name = "Country"
+        verbose_name_plural = "Countries"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name

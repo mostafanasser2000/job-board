@@ -24,11 +24,6 @@ WORK_TYPES = [
     ("internship", "Internship"),
     ("contract", "Contract"),
 ]
-CURRENCY_CHOICES = [
-    ("USD", "US Dollar"),
-    ("EUR", "Euro"),
-    ("GBP", "British Pound"),
-]
 PERIOD_CHOICES = [
     ("Per Hour", "Per Hour"),
     ("Per Day", "Per Day"),
@@ -56,3 +51,14 @@ PHONE_REGEX = re.compile(
 """,
     re.VERBOSE,
 )
+
+DEGREE_CHOICES = [
+    ("Associate", "Associate"),
+    ("Bachelor", "Bachelor"),
+    ("Master", "Master"),
+    ("MBA", "MBA"),
+    ("PhD", "PhD"),
+    ("Certificate", "Certificate"),
+    ("Diploma", "Diploma"),
+    ("Other", "Other"),
+]

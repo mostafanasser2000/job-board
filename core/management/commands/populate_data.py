@@ -1,16 +1,15 @@
-from django.core.management.base import BaseCommand
-from django.utils.text import slugify
-from core.models import Industry, Country, City, Currency
 import re
+from jobs.core.models import Industry, Country, Currency, Skill
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    help = "Populate database with industries, countries, cities, currencies"
+    help = "Populate database with industries, countries, skills, currencies"
 
     def add_arguments(self, parser):
         parser.add_argument("--industry", type=str, help="Path to industries file")
         parser.add_argument("--country", type=str, help="Path to countries file")
-        parser.add_argument("--city", type=str, help="Path to cities file")
+        parser.add_argument("--skills", type=str, help="Path to skills file")
         parser.add_argument("--currency", type=str, help="Path to currencies file")
 
     def handle(self, *args, **options):
@@ -19,8 +18,8 @@ class Command(BaseCommand):
             self.populate_industries(options["industry"])
         if options["country"]:
             self.populate_countries(options["country"])
-        if options["city"]:
-            self.populate_cities(options["city"])
+        if options["skills"]:
+            self.populate_skills(options["skills"])
         if options["currency"]:
             self.populate_currencies(options["currency"])
 
@@ -35,10 +34,20 @@ class Command(BaseCommand):
         )
 
     def populate_countries(self, file_path):
-        pass
+        with open(file_path, "r") as f:
+            for line in f.readlines():
+                country = line.strip()
+                if country:
+                    Country.objects.get_or_create(name=country)
+        self.stdout.write(self.style.SUCCESS("Successfully added countries to database"))
 
-    def populate_cities(self, file_path):
-        pass
+    def populate_skills(self, file_path):
+        with open(file_path, "r") as f:
+            for line in f.readlines():
+                skill = line.strip()
+                if skill:
+                    Skill.objects.get_or_create(name=skill)
+        self.stdout.write(self.style.SUCCESS("Successfully added countries to database"))
 
     def populate_currencies(self, file_path):
         with open(file_path, "r") as f:
