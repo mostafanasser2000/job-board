@@ -1,4 +1,3 @@
-# from django.contrib.auth.urls import urls
 from django.contrib.auth.views import (
     PasswordChangeView,
     PasswordChangeDoneView,
