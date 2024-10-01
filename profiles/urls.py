@@ -1,0 +1,87 @@
+from django.urls import path
+from . import views
+
+
+urlpatterns = [
+    # User profile URLs
+    path(
+        "profile/educations/",
+        views.EducationsListView.as_view(),
+        name="education_list",
+    ),
+    path(
+        "profile/educations/add/",
+        views.EducationsCreateView.as_view(),
+        name="education_add",
+    ),
+    path(
+        "profile/educations/<int:pk>/update/",
+        views.EducationsUpdateView.as_view(),
+        name="education_edit",
+    ),
+    path(
+        "profile/educations/<int:pk>/delete/",
+        views.EducationDeleteView.as_view(),
+        name="education_delete",
+    ),
+    path(
+        "profile/experience/",
+        views.ExperienceListView.as_view(),
+        name="experience_list",
+    ),
+    path(
+        "profile/experience/add/",
+        views.ExperienceCreateView.as_view(),
+        name="experience_add",
+    ),
+    path(
+        "profile/experience/<int:pk>/update/",
+        views.ExperienceUpdateView.as_view(),
+        name="experience_edit",
+    ),
+    path(
+        "profile/experience/<int:pk>/delete/",
+        views.ExperienceDeleteView.as_view(),
+        name="experience_delete",
+    ),
+    path(
+        "profile/skills/",
+        views.UserSkillListView.as_view(),
+        name="skill_list",
+    ),
+    path(
+        "profile/skills/add/",
+        views.SkillsCreateView.as_view(),
+        name="skill_add",
+    ),
+    path(
+        "profile/skills/<int:pk>/update/",
+        views.SkillsUpdateView.as_view(),
+        name="skill_edit",
+    ),
+    path(
+        "profile/skills/<int:pk>/delete/",
+        views.SkillsDeleteView.as_view(),
+        name="skill_delete",
+    ),
+    path(
+        "profile/<str:username>/",
+        views.UserProfileDetailView.as_view(),
+        name="user_profile",
+    ),
+    path(
+        "profile/<str:username>/update/",
+        views.UserProfileUpdateView.as_view(),
+        name="user_profile_update",
+    ),
+    path(
+        "company/<str:username>/",
+        views.CompanyProfileDetailView.as_view(),
+        name="company_profile",
+    ),
+    path(
+        "company/<str:username>/update/",
+        views.CompanyProfileUpdateView.as_view(),
+        name="company_profile_update",
+    ),
+]

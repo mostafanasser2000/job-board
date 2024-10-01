@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+{%if experience%}Update{%else%}Add{%endif%} Experience
+{% endblock title %}
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.media}}
+    {{form|crispy}}
+    <input type="submit" value="{%if experience%}Update{%else%}Add{%endif%}" class="btn btn-outline-primary">
+</form>
+{% endblock content %}

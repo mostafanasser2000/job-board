@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Professional Experience{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-4 mb-0">Professional Experience</h1>
+      <p class="lead text-muted">Showcase your career journey to potential employers.</p>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col d-flex justify-content-end">
+      <a href="{% url 'experience_add' %}" class="btn btn-primary">
+        <i class="fas fa-plus-circle me-2"></i>Add New Experience
+      </a>
+    </div>
+  </div>
+
+  {% if experiences %}
+    <div class="row">
+      <div class="col">
+        <div class="list-group shadow-sm">
+          {% for exp in experiences %}
+            <div class="list-group-item list-group-item-action p-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h5 class="mb-1">{{ exp.job_title }}</h5>
+                  <p class="mb-1 text-primary">{{ exp.company_name }}</p>
+                  <small class="text-muted">{{ exp.date_range }}</small>
+                </div>
+                <div>
+                  <a href="{% url 'experience_edit' exp.id %}" class="btn btn-sm btn-outline-primary me-2" title="Edit">
+                    <i class="fas fa-edit me-1"></i>Edit
+                  </a>
+                  <a href="{% url 'experience_delete' exp.id %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                    <i class="fas fa-trash me-1"></i>Delete
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-info" role="alert">
+          <h4 class="alert-heading">No experience added yet!</h4>
+          <p class="mb-0">Add your professional experiences to showcase your career journey to potential employers.</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock content %}

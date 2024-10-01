@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Skills{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-4 mb-3">Your Skills</h1>
+      <p class="lead text-muted">Showcase your talents to potential recruiters.</p>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col">
+      {% if skills %}
+        <div class="d-flex flex-wrap gap-2">
+          {% for skill in skills %}
+            <div class="position-relative">
+              <span class="badge bg-primary p-2 pe-4">{{ skill }}</span>
+              <form method="post" action="{% url 'skill_delete' skill.id %}" class="position-absolute top-0 end-0" style="margin-top: -5px; margin-right: -5px;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm text-white p-0" title="Delete skill">
+                  <i class="fas fa-times-circle"></i>
+                </button>
+              </form>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-info" role="alert">
+          <h4 class="alert-heading">No skills added yet!</h4>
+          <p class="mb-0">Add your skills to showcase your talents to recruiters.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <a href="{% url 'skill_add' %}" class="btn btn-primary">
+        <i class="fas fa-plus-circle me-2"></i>Add New Skill
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

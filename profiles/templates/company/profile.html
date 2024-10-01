@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+{% load posts_tags %}
+{% block title %}{{ company.name }} - Profile{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Profile Image and Quick Info -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="{{ company.logo }}" alt="{{ company.name }} logo" class="rounded-circle img-fluid" style="width: 150px;">
+                    <h5 class="my-3">{{ company.name }}</h5>
+                    {% if company.industries.all %}
+                        <p class="text-muted mb-1">
+                            {% for industry in company.industries.all %}
+                                <span class="badge bg-secondary">{{ industry.name }}</span>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                    <p class="text-muted mb-4">
+                        {% if company.country %}
+                            <i class="fas fa-map-marker-alt me-2"></i>{{ company.country.name }}
+                        {% endif %}
+                    </p>
+                    {% if user.is_authenticated and user == company.user %}
+                        <div class="d-flex justify-content-center mb-2">
+                            <a href="{% url 'company_profile_update' user.username%}" class="btn btn-primary">Update Profile</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Social Media Links -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for platform, url in company.get_social_links.items %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <i class="fab fa-{{ platform }} fa-lg" style="color: #333333;"></i>
+                            <a href="{{ url }}" target="_blank" class="me-2 text-decoration-none text-dark">{{platform|title}}</a>
+                        </li>
+                        {% endfor %}
+                        {% if company.website %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <i class="fas fa-globe fa-lg" style="color: #333333;"></i>
+                            <a href="{{ company.website }}" target="_blank" class="mb-0 text-decoration-none text-dark">Website</a>
+                        </li>
+                        {% endif %}
+                        {% if company.contact_email %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <i class="fas fa-envelope fa-lg" style="color: #333333;"></i>
+                            <a href="{{ company.contact_email }}" target="_blank" class="me-2 text-decoration-none text-dark">Email</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Detailed Information -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="mb-4">About {{ company.name }}</h2>
+                    <p>{{ company.about|linebreaks }}</p>
+                    
+                    {% if company.founded_at %}
+                        <p><strong>Founded:</strong> {{ company.founded_at|date:"Y" }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Job Listings -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="mb-4">Current Job Openings</h2>
+                    {% if open_jobs %}
+                    {% for job in open_jobs %}
+                    <div class="job-item p-4 mb-4 card">
+                      <div class="row g-4">
+                        <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                          <div class="text-start ps-4">
+                            <div class="mb-4">
+                              <h5 class="m-0">{{ job.title}}</h5>
+                            </div>
+                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{job.location}}</span>
+                            <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{job.get_work_type_display }}</span>
+                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{job.get_workplace_type_display }}</span>
+                            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>{{job.salary_range }}</span>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                          <div class="d-flex mb-3">
+                            <a class="btn btn-primary" href="{{ job.get_absolute_url }}">More Details</a>
+                          </div>
+                          <small><i class="far fa-calendar-alt text-primary me-2"></i>{{ job.created| transform_date }}</small>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor%}
+                    {% else %}
+                        <p>No current job openings.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

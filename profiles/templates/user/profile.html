@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ profile.name }}'s Profile{% endblock title %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row g-4">
+        <div class="col-12 mb-4">
+    <div class="card">
+        <div class="card-body position-relative">
+            {% if is_owner %}
+                <a href="{% url 'user_profile_update' profile.user.username %}" class="btn btn-sm btn-primary position-absolute top-0 end-0 m-3">
+                    <i class="fas fa-edit"></i> Edit Info
+                </a>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="{{profile.logo}}"
+                         alt="User Avatar"
+                         class="img-fluid mb-3">
+                </div>
+                <div class="col-md-9">
+                    <h1>{{ profile.name }}</h1>
+                    <ul class="list-unstyled card p-2 ">
+                        {% if profile.country %}
+                            <li><i class="fas fa-map-marker-alt me-2"></i> {{ profile.country.name }}</li>
+                        {% endif %}
+                        {% if profile.contact_email %}
+                            <li><i class="fas fa-envelope me-2"></i> {{ profile.contact_email }}</li>
+                        {% endif %}
+                        {% if profile.gender %}
+                            <li><i class="fas fa-venus-mars me-2"></i> {{ profile.get_gender_display }}</li>
+                        {% endif %}
+                        {% if profile.military_status %}
+                            <li><i class="fas fa-shield-alt me-2"></i> Military Status: {{ profile.get_military_status_display }}</li>
+                        {% endif %}
+                    </ul>
+                    <div class="social-links mt-2 card p-2 flex flex-row flex-wrap">
+                        {% for platform, url in profile.get_social_links.items %}
+                            <a href="{{ url }}" target="_blank" class="text-decoration-none me-2">
+                                <i class="fab fa-{{ platform }} fa-lg"></i>
+                            </a>
+                        {% endfor %}
+                        {% if profile.website %}
+                            <a href="{{ profile.website }}" target="_blank" class="text-decoration-none me-2">
+                                <i class="fas fa-globe fa-lg"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="about-section mt-3 card p-2">
+                        <h4>About</h4>
+                        <p>{{ profile.about|default:"No information provided." }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <h2 class="card-title h3 mb-0">Experience</h2>
+                  {% if is_owner %}
+                    <a href="{% url 'experience_list' %}" class="btn btn-outline-primary btn-sm">
+                      <i class="fas fa-edit me-1"></i>Manage
+                    </a>
+                  {% endif %}
+                </div>
+                {% if experiences %}
+                  <div class="list-group">
+                    {% for experience in experiences %}
+                      <div class="list-group-item list-group-item-action p-4">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">{{ experience.job_title }}</h5>
+                          <small class="text-muted">{{ experience.date_range }}</small>
+                        </div>
+                        <p class="mb-1 text-primary">{{ experience.company_name }}</p>
+                        <p class="mb-1">{{ experience.description }}</p>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <p class="text-muted mb-0">No experience information available.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <h2 class="card-title h3 mb-0">Education</h2>
+                  {% if is_owner %}
+                    <a href="{% url 'education_list' %}" class="btn btn-outline-primary btn-sm">
+                      <i class="fas fa-edit me-1"></i>Manage
+                    </a>
+                  {% endif %}
+                </div>
+                {% if educations %}
+                  <div class="list-group">
+                    {% for education in educations %}
+                      <div class="list-group-item list-group-item-action p-4">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">{{ education.degree }} in {{ education.field_of_study }}</h5>
+                          <small class="text-muted">{{ education.date_range }}</small>
+                        </div>
+                        <p class="mb-1 text-primary">{{ education.institution_name }}</p>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <p class="text-muted mb-0">No education information available.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        
+          <div class="col-12 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <h2 class="card-title h3 mb-0">Skills</h2>
+                  {% if is_owner %}
+                    <a href="{% url 'skill_list' %}" class="btn btn-outline-primary btn-sm">
+                      <i class="fas fa-edit me-1"></i>Manage
+                    </a>
+                  {% endif %}
+                </div>
+                {% if skills %}
+                  <div class="d-flex flex-wrap gap-2">
+                    {% for skill in skills %}
+                      <span class="badge bg-primary">{{ skill }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <p class="text-muted mb-0">No skills listed.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+{% endblock content %}
