@@ -1,5 +1,5 @@
 body {
-  font-family: Roboto, serif;
+  font-family: "Roboto", sans-serif;
   background-color: #f5f6f7;
 }
 
@@ -9,7 +9,6 @@ body {
 }
 
 .custom-logo {
-  font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   font-weight: bold;
   color: #0b213e !important;
