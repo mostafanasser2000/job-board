@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{company.name}} Dashboard{% endblock title %}
+
+{% block content %}
+<div class="container-fluid py-5">
+  <h1 class="display-4 mb-4">{{ company.name }} Dashboard</h1>
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card bg-primary text-white h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total Jobs Posted</h5>
+          <h2 class="display-4">{{ total_jobs }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card bg-success text-white h-100">
+        <div class="card-body">
+          <h5 class="card-title">Open Jobs</h5>
+          <h2 class="display-4">{{ open_jobs }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card bg-info text-white h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total Applicants</h5>
+          <h2 class="display-4">{{ total_applicants }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card bg-warning text-white h-100">
+        <div class="card-body">
+          <h5 class="card-title">Avg. Applicants per Job</h5>
+          <h2 class="display-4">{{ avg_applicants_per_job|floatformat:1 }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header bg-light">
+      <h2 class="h4 mb-0">Posted Jobs</h2>
+    </div>
+    <div class="card-body">
+      {% if jobs %}
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Job Title</th>
+                <th>Date Posted</th>
+                <th>Status</th>
+                <th>Applicants</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for job in jobs %}
+                <tr>
+                  <td>{{ job.title }}</td>
+                  <td>{{ job.created|date:"M d, Y" }}</td>
+                  <td>
+                    {% if job.is_open %}
+                      <span class="badge bg-success">Open</span>
+                    {% else %}
+                      <span class="badge bg-secondary">Closed</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ job.applicants.count }}</td>
+                  <td>
+                    <a href="{% url 'job_detail' job.slug %}" class="btn btn-sm btn-outline-primary">View</a>
+                    <a href="{% url 'job_edit' job.slug %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="{% url 'job_delete' job.slug %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                    {% if job.is_open %}
+                      <a href="{% url 'job_close' job.slug %}" class="btn btn-sm btn-outline-warning">Close</a>
+                    {%else%}
+                      <a href="{% url 'job_open' job.slug %}" class="btn btn-sm btn-outline-success">Open</a>
+                    {%endif%}
+                    
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="text-muted">No jobs posted yet.</p>
+      {% endif %}
+    </div>
+  </div>  
+</div>
+{% endblock content %}

@@ -1,0 +1,31 @@
+<div class="container-fluid bg-white mb-5 card" style="padding: 35px;">
+    <div class="container">
+        <form method="GET" action="{% url 'jobs_filter' %}">
+            <div class="row g-2">
+                <div class="col-md-10">
+                    <div class="row g-2">
+                        {{form.media}}
+                        {% for field in form %}
+                        <div class="col-md-4">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                            <small class="errorlist">{{ field.errors|striptags }}</small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-2 justify-content-center mt-3">
+                <div class="col-md-2">
+                    <input type="submit" class="btn btn-success border-0 w-100" value="Filter">
+                </div>
+                <div class="col-md-2">
+                    <a href="{% url 'job_list' %}" class="btn btn-warning border-0 w-100">Clear</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

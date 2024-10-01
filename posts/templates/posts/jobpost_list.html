@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% load posts_tags %} 
+{% load crispy_forms_tags %}
+{% block title %}Jobs{% endblock title %}
+{% block content%}
+<div class="container-xxl py-5">
+  {% include 'extra/filter_form.html' with form=filter_form%}
+  <div class="container" id="job-list">
+    <h1 class="text-center mb-5">Available Jobs</h1>
+    {% for job in jobs %}
+    <div class="job-item p-4 mb-4 card">
+      <div class="row g-4">
+        <div class="col-sm-12 col-md-8 d-flex align-items-center">
+          <img class="flex-shrink-0 img-fluid border rounded" src="{{job.publisher.companyprofile.logo}}" alt="" style="width: 80px; height: 80px"/>
+          <div class="text-start ps-4">
+            <div class="mb-4">
+              <h5 class="m-0">{{ job.title}}</h5>
+              <small><strong><a href="{% url 'company_profile' job.publisher.username%}" class="nav-link m-0 p-0">{{ job.publisher.companyprofile.str_name}}</a></strong></small>
+            </div>
+            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{job.location}}</span>
+            <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{job.get_work_type_display }}</span>
+            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{job.get_workplace_type_display }}</span>
+            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>{{job.salary_range }}</span>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+          <div class="d-flex mb-3">
+            <a class="btn btn-primary" href="{{ job.get_absolute_url }}">More Details</a>
+          </div>
+          <small><i class="far fa-calendar-alt text-primary me-2"></i>{{ job.created| transform_date }}</small>
+        </div>
+      </div>
+    </div>
+    {% endfor%}
+  </div>
+</div>
+{% endblock content %}
+{% block pagination%}
+{% if is_paginated %}
+<nav aria-label="Job list pagination">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page=1" aria-label="First">
+        <span aria-hidden="true">&laquo;&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="?page={{ page_obj.previous_page_number }}"
+        aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">&laquo;</span>
+    </li>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <li class="page-item active" aria-current="page">
+      <span class="page-link">{{ num }}</span>
+    </li>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="?page={{ page_obj.next_page_number }}"
+        aria-label="Next"
+      >
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="?page={{ page_obj.paginator.num_pages }}"
+        aria-label="Last"
+      >
+        <span aria-hidden="true">&raquo;&raquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">&raquo;</span>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+{% endblock %}

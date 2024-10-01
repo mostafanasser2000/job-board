@@ -1,0 +1,140 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% load posts_tags %}
+{% block content %}
+<div class="container-xxl py-5 card">
+  <div class="container">
+    <div class="row gy-5 gx-4">
+      <div class="col-lg-8">
+        <div class="d-flex align-items-center mb-5">
+          <img
+            class="flex-shrink-0 img-fluid border rounded"
+            src={{job.publisher.companyprofile.logo}}
+            alt=""
+            style="width: 80px; height: 80px"
+          />
+          <div class="text-start ps-4">
+            <div class="mb-4">
+              <h3 class="m-0">{{ job.title }}</h3>
+              <small
+                ><strong
+                  ><a href="" class="nav-link m-0 p-0"
+                    >{{ job.publisher }}</a
+                  ></strong
+                ></small
+              >
+            </div>
+            <span class="text-truncate me-3">
+              <i class="fa fa-map-marker-alt text-primary me-2"></i>{{job.location }}
+            </span>
+            <span class="text-truncate me-3">
+              <i class="far fa-clock text-primary me-2"></i>
+              <a
+                href="{% url 'job_list' %}?work_type={{ job.work_type }}"
+                class="text-decoration-none"
+                style="color: inherit"
+                >{{ job.get_work_type_display }}</a
+              >
+            </span>
+            <span class="text-truncate me-3">
+              <i class="fa fa-map-marker-alt text-primary me-2"></i>
+              <a
+                href="{% url 'job_list' %}?workplace_type={{ job.workplace_type }}"
+                class="text-decoration-none"
+                style="color: inherit"
+                >{{ job.get_workplace_type_display }}</a
+              >
+            </span>
+            <span class="text-truncate me-0">
+              <i class="far fa-money-bill-alt text-primary me-2"></i>
+              {{job.salary_range}}
+            </span>
+          </div>
+        </div>
+        <div class="mb-5">
+          <h4 class="mb-3">Job Description</h4>
+          {{ job.description|safe }}
+        </div>
+
+        <!-- Application form -->
+         {% if job.is_open and user.is_authenticated and not user.is_company %}
+          {% if is_applied %}
+            <div class="alert alert-success" role="alert">
+              <p class="mb-0">You applied to this job</p>
+            </div>
+          {% else %}
+            <div class="">
+              <h4 class="mb-4">Apply For The Job</h4>
+                <form>
+                    <div class="row g-3">
+                        <div class="col-12 col-sm-6">
+                            <input type="text" class="form-control" placeholder="Your Name">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input type="email" class="form-control" placeholder="Your Email">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input type="text" class="form-control" placeholder="Portfolio Website">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input type="file" class="form-control bg-white" id="resume">
+                        </div>
+                        <div class="col-12">
+                            <textarea class="form-control" rows="5" placeholder="Coverletter"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100" type="submit">Apply Now</button>
+                        </div>
+                    </div>
+                </form>
+              </div>
+          {% endif %}
+          
+         
+         {% endif %}
+       
+      </div>
+      <div class="col-lg-4">
+        <div class="bg-light rounded p-5 mb-4 card">
+                  <!-- share job -->
+        </div>
+        <div class="bg-light rounded p-5 mb-4 card">
+          <h4 class="mb-4">Job Summary</h4>
+          <p>
+            <i class="fa fa-angle-right text-primary me-2"></i>Published On: {{job.created|date }}
+          </p>
+          <p>
+            <i class="fa fa-angle-right text-primary me-2"></i>Job Nature:
+            <a
+              href="{% url 'job_list' %}?work_type={{ job.work_type }}"
+              class="text-decoration-none"
+              style="color: inherit"
+              >{{ job.get_work_type_display }}</a
+            >
+          </p>
+          <p>
+            <i class="fa fa-angle-right text-primary me-2"></i>Salary: {{job.salary_range }}
+          </p>
+          <p>
+            <i class="fa fa-angle-right text-primary me-2"></i>Location: {{job.location }}
+          </p>
+        </div>
+        <div class="bg-light rounded p-5 mb-4 card">
+          <h4 class="mb-4">Skills</h4>
+          <div class="d-flex flex-wrap">
+            {% for skill in job.skills_required.all %}
+            <a
+              href="{% url 'job_list' %}?skills={{ skill.slug }}"
+              class="nav-link badge rounded-pill bg-secondary text-white m-1"
+              >{{ skill.name }}</a
+            >
+            {% empty %}
+            <p>No specific skills listed.</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
