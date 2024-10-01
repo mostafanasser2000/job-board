@@ -1,5 +1,15 @@
 from django.db import models
 from django.utils.text import slugify
+import re
+
+
+def custom_slug(value):
+    value = value.replace('+', 'plus').replace('#', 'sharp')
+    slug = slugify(value)
+    if not slug:
+        slug = re.sub(r'[^\w\s-]', '', value.lower())
+        slug = re.sub(r'[-\s]+', '-', slug).strip('-_')
+    return slug
 
 
 class BaseModel(models.Model):
@@ -43,7 +53,7 @@ class Skill(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = custom_slug(self.name)
         return super().save(*args, **kwargs)
 
     def __str__(self):

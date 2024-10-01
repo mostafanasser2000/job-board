@@ -1,10 +1,11 @@
 import re
 
-# STATUS = [
-#     ("draft", "Draft"),
-#     ("published", "Published"),
-#     ("closed", "Closed"),
-# ]
+APPLICATION_STATUS_CHOICES = [
+    ("pending", "Pending"),
+    ("viewed", "Viewed"),
+    ("rejected", "Rejected"),
+]
+JOB_STATUS_CHOICES = [("opened", "Opened"), ("closed", "Closed")]
 COMPANY_SIZE_CHOICES = [
     (1, "1-10"),
     (2, "11-50"),

@@ -1,5 +1,5 @@
 import re
-from jobs.core.models import Industry, Country, Currency, Skill
+from core.models import Industry, Country, Currency, Skill
 from django.core.management.base import BaseCommand
 
 
@@ -24,10 +24,11 @@ class Command(BaseCommand):
             self.populate_currencies(options["currency"])
 
     def populate_industries(self, file_path):
-        with open(file_path, "r") as file:
-            industries = file.read().split("\n")
-            for industry in industries:
-                Industry.objects.get_or_create(name=industry)
+        with open(file_path, "r") as f:
+            for line in f.readlines():
+                industry = line.strip()
+                if industry:
+                    Industry.objects.get_or_create(name=industry)
 
         self.stdout.write(
             self.style.SUCCESS("Successfully added industries to database")
@@ -47,15 +48,16 @@ class Command(BaseCommand):
                 skill = line.strip()
                 if skill:
                     Skill.objects.get_or_create(name=skill)
-        self.stdout.write(self.style.SUCCESS("Successfully added countries to database"))
+        self.stdout.write(self.style.SUCCESS("Successfully added skills to database"))
 
     def populate_currencies(self, file_path):
         with open(file_path, "r") as f:
             for line in f.readlines():
                 currency = line.strip()
-                c_code = re.search(r"\(([A-Z]{3})\)", currency).group(1)
-                c_name = currency[: currency.find("(") - 1]
-                Currency.objects.get_or_create(name=c_name, code=c_code)
+                if currency:
+                    c_code = re.search(r"\(([A-Z]{3})\)", currency).group(1)
+                    c_name = currency[: currency.find("(") - 1]
+                    Currency.objects.get_or_create(name=c_name, code=c_code)
         self.stdout.write(
             self.style.SUCCESS("Successfully added currencies to database")
         )
