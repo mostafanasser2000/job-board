@@ -5,7 +5,7 @@
             Shoglana
         </a>
 
-        <form class="d-flex search-form" method="GET" action="{% url 'search_jobs' %}">
+        <form class="d-flex search-form" method="GET" action="{% url 'jobs_search' %}">
             <input class="form-control me-2" type="search" placeholder="Search jobs, companies..." aria-label="Search" name="q">
             <button class="btn btn-outline-primary" type="submit">
                 <i class="fas fa-search"></i>
@@ -20,14 +20,21 @@
             <div class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
                     {% if user.is_company %}
-                        <a href="#" class="nav-link">Dashboard</a>
+                        <a href="{% url 'dashboard'%}" class="nav-link">Dashboard</a>
                         <a href="{% url 'job_add' %}" class="nav-link"><i class="fas fa-briefcase me-1"></i> Post Job</a>
+
                     {% else %}
-                        <a href="#" class="nav-link">Applications</a>
+                        <a href="" class="nav-link">Applications</a>
                     {% endif %}
-                    <a href="{% url 'user_profile' user.username %}" class="nav-link d-none d-lg-block">
-                        <img src="{% if user.userprofile.image %}{{ user.userprofile.image.url }}{% else %}{% static 'imgs/logo.png' %}{% endif %}" class="rounded-circle" alt="User Avatar" width="40" height="40">
-                    </a>
+                    {% if user.is_company %}
+                    	 <a href="{% url 'company_profile' user.username %}" class="nav-link d-none d-lg-block">
+                        <img src="{{user.companyprofile.logo}}" class="rounded-circle" alt="Company Avatar" width="40" height="40">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'user_profile' user.username %}" class="nav-link d-none d-lg-block">
+                        <img src="{{user.userprofile.logo}}" class="rounded-circle" alt="User Avatar" width="40" height="40">
+                        </a>
+                    {% endif %}
                     <a href="{% url 'logout' %}" class="nav-link btn btn-outline-primary d-none d-lg-inline-block ms-2">Logout</a>
 
                     <a href="{% url 'logout' %}" class="nav-link d-lg-none">Logout</a>
