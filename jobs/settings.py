@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "ckeditor",
     "django_select2",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -136,7 +135,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-# ckeditor configs
+# ckeditor settings
 CKEDITOR_CONFIGS = {
     "default": {
         "toolbar": "full",
@@ -151,10 +150,3 @@ CKEDITOR_CONFIGS = {
         ),
     },
 }
-
-# debug-toolbar settings
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-]
