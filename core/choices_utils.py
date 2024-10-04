@@ -2,7 +2,8 @@ import re
 
 APPLICATION_STATUS_CHOICES = [
     ("pending", "Pending"),
-    ("viewed", "Viewed"),
+    ("reviewed", "Reviewed"),
+    ("selected", "selected"),
     ("rejected", "Rejected"),
 ]
 JOB_STATUS_CHOICES = [("opened", "Opened"), ("closed", "Closed")]
@@ -41,14 +42,9 @@ MILITARY_STATUS_CHOICES = [
 GENDER_CHOICES = [("Male", "Male"), ("Female", "Female")]
 PHONE_REGEX = re.compile(
     r"""
-    ^               # Start of string
-    (\+?1[-.\s]?)?  # Optional country code for US (+1, 1-, 1., 1 )
-    \(?(\d{3})\)?   # Area code, with or without parentheses
-    [-.\s]?         # Optional separator (-, ., or space)
-    (\d{3})         # First 3 digits
-    [-.\s]?         # Optional separator (-, ., or space)
-    (\d{4})         # Last 4 digits
-    $               # End of string
+    \+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|
+2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|
+4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$
 """,
     re.VERBOSE,
 )
