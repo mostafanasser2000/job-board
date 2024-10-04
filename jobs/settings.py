@@ -1,16 +1,19 @@
-
 from pathlib import Path
+import json
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-9900pdh%#2bb43a5=i^#*6%)=9p!x(46tl4*xntis$e!qf1+g_"
+with open(os.path.join(BASE_DIR, "secrets.json"), "r") as f:
+    SECRETS = json.load(f)
+SECRET_KEY = SECRETS.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = SECRETS.get("DEBUG", True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -28,6 +31,7 @@ INSTALLED_APPS = [
     "core.apps.CoreConfig",
     "posts.apps.PostsConfig",
     "profiles.apps.ProfilesConfig",
+    "applications.apps.ApplicationsConfig",
     # 3d party apps
     "crispy_forms",
     "crispy_bootstrap5",
@@ -36,7 +40,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -72,8 +75,14 @@ WSGI_APPLICATION = "jobs.wsgi.application"
 
 DATABASES = {
     "default": {
+        # "ENGINE": "django.db.backends.postgresql",
+        # "NAME": SECRETS.get("DB_NAME", "jobs_portal"),
+        # "USER": SECRETS.get("DB_USER", ""),
+        # "HOST": SECRETS.get("DB_HOST"),
+        # "PASSWORD": SECRETS.get("DB_PASSWORD", ""),
+        # "PORT": SECRETS.get("DB_PORT"),
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": "db.sqlite3",
     }
 }
 
@@ -150,3 +159,17 @@ CKEDITOR_CONFIGS = {
         ),
     },
 }
+
+if DEBUG:
+    try:
+        import debug_toolbar
+    except ImportError:
+        pass
+
+    else:
+        INSTALLED_APPS.append("debug_toolbar")
+        INTERNAL_IPS = ["127.0.0.1"]
+        MIDDLEWARE.insert(
+            MIDDLEWARE.index("django.middleware.common.CommonMiddleware") + 1,
+            "debug_toolbar.middleware.DebugToolbarMiddleware",
+        )
