@@ -24,7 +24,7 @@
                         <a href="{% url 'job_add' %}" class="nav-link"><i class="fas fa-briefcase me-1"></i> Post Job</a>
 
                     {% else %}
-                        <a href="" class="nav-link">Applications</a>
+                        <a href="{% url 'user_applications' %}" class="nav-link">Applications</a>
                     {% endif %}
                     {% if user.is_company %}
                     	 <a href="{% url 'company_profile' user.username %}" class="nav-link d-none d-lg-block">
