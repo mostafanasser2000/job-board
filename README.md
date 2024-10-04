@@ -1,12 +1,11 @@
 # Job Board Portal Management System
 
-Shoglana a Job Board Portal Management System built with Django, designed to facilitate job postings, applications, and user management. This system provides a platform for employers to post job and for job seekers to browse and apply for jobs.
+Shoglana is a Job Board Portal Management System built with Django, designed to facilitate job postings, applications, and user management. This system provides a platform for employers to post jobs and for job seekers to browse and apply.
 
 ## Table of Contents
 
 - [Job Board Portal Management System](#job-board-portal-management-system)
   - [Table of Contents](#table-of-contents)
-  - [Preview](#preview)
   - [Video Preview](#video-preview)
   - [Screenshots](#screenshots)
   - [Features](#features)
@@ -17,10 +16,7 @@ Shoglana a Job Board Portal Management System built with Django, designed to fac
   - [Future Development](#future-development)
   - [Contributing](#contributing)
 
-## Preview
-
 ## Video Preview
-
 [![Job-Board-Portal Preivew](scrennshots/1.png)](https://www.youtube.com/watch?v=lOiropOd8ks)
 
 ## Screenshots
