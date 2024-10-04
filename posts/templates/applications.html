@@ -1,6 +1,4 @@
 {% extends "base.html" %}
-{% load static %}
-
 {% block title %}Applications{% endblock title %}
 
 {% block content %}
@@ -11,7 +9,7 @@
       <div class="card bg-primary text-white h-100">
         <div class="card-body">
           <h5 class="card-title">Total Applications</h5>
-          <h2 class="display-4">100</h2>
+          <h2 class="display-4">{{applications.count}}</h2>
         </div>
       </div>
     </div>
@@ -21,14 +19,14 @@
       <h2 class="h4 mb-0">Posted Jobs</h2>
     </div>
     <div class="card-body">
-      {% if user.applications %}
+      {% if applications %}
         <div class="table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
                 <th>Job Title</th>
                 <th>Applied at</th>
-                <th>Job Status</th>
+                <th>Application Status</th>
               </tr>
             </thead>
             <tbody>
@@ -37,10 +35,14 @@
                   <td><a href="{{application.job.get_absolute_url}}" class="text-decoration-none">{{ application.job.title }}</a></td>
                   <td>{{ application.created|date:"M d, Y" }}</td>
                   <td>
-                    {% if application.job.is_open %}
-                      <span class="badge bg-success">Open</span>
-                    {% else %}
-                      <span class="badge bg-secondary">Closed</span>
+                    {% if application.status == "pending"%}
+                      <span class="badge bg-warning">{{application.get_status_display}}</span>
+                    {% elif application.status == "reviewed" %}
+                      <span class="badge bg-primary">{{application.get_status_display}}</span>
+                    {% elif  application.status == "selected"%}
+                      <span class="badge bg-success">{{application.get_status_display}}</span>
+                    {%else%}
+                      <span class="badge bg-danger">{{application.get_status_display}}</span>
                     {% endif %}
                   </td>
                 </tr>

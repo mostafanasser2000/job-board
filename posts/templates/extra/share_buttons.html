@@ -1,0 +1,36 @@
+<div class="bg-light rounded p-5 mb-4 card">
+    <div class="mt-4">
+      <h5>Share this job:</h5>
+      <div class="d-flex gap-3">
+        <a
+          href="https://wa.me/?text={{ job.title|urlencode }}%20-%20{{ full_url|urlencode }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-success"
+          title="Share on WhatsApp"
+        >
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        
+        <a
+          href="https://www.facebook.com/sharer/sharer.php?u={{ full_url|urlencode }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary"
+          title="Share on Facebook"
+        >
+          <i class="fa-brands fa-facebook-f"></i>
+        </a>
+        
+        <a
+          href="https://www.linkedin.com/sharing/share-offsite/?url={{ full_url|urlencode }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-info"
+          title="Share on LinkedIn"
+        >
+          <i class="fa-brands fa-linkedin-in"></i>
+        </a>
+      </div>
+    </div>
+  </div>

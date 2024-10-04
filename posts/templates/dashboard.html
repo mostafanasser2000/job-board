@@ -11,7 +11,7 @@
       <div class="card bg-primary text-white h-100">
         <div class="card-body">
           <h5 class="card-title">Total Jobs Posted</h5>
-          <h2 class="display-4">{{ total_jobs }}</h2>
+          <h2 class="display-4">{{ jobs.count }}</h2>
         </div>
       </div>
     </div>
@@ -28,14 +28,6 @@
         <div class="card-body">
           <h5 class="card-title">Total Applicants</h5>
           <h2 class="display-4">{{ total_applicants }}</h2>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3 mb-3">
-      <div class="card bg-warning text-white h-100">
-        <div class="card-body">
-          <h5 class="card-title">Avg. Applicants per Job</h5>
-          <h2 class="display-4">{{ avg_applicants_per_job|floatformat:1 }}</h2>
         </div>
       </div>
     </div>
@@ -69,9 +61,9 @@
                       <span class="badge bg-secondary">Closed</span>
                     {% endif %}
                   </td>
-                  <td>{{ job.applicants.count }}</td>
+                  <td><a href="{% url 'job_applications' job.slug%}">{{ job.applications_count }}</a></td>
                   <td>
-                    <a href="{% url 'job_detail' job.slug %}" class="btn btn-sm btn-outline-primary">View</a>
+                    <a href="{{job.get_absolute_url}}" class="btn btn-sm btn-outline-primary">View</a>
                     <a href="{% url 'job_edit' job.slug %}" class="btn btn-sm btn-outline-secondary">Edit</a>
                     <a href="{% url 'job_delete' job.slug %}" class="btn btn-sm btn-outline-danger">Delete</a>
                     {% if job.is_open %}

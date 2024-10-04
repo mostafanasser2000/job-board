@@ -10,6 +10,9 @@ from .forms import FilterJobsForm
 from django.db.models import Q
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from profiles.models import CompanyProfile
+from django.db.models import Avg
+from applications.models import Application
+from applications.forms import ApplicationForm
 
 
 class JobPostListView(ListView):
@@ -49,6 +52,20 @@ class JobPostDetailView(DetailView):
     model = JobPost
     context_object_name = "job"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated and not self.request.user.is_company:
+            if Application.objects.filter(
+                job_post=self.get_object(), applicant=self.request.user
+            ).exists():
+                context["is_applied"] = True
+            else:
+                form = ApplicationForm()
+                context["form"] = form
+        context["full_url"] = self.request.build_absolute_uri(self.get_object().get_absolute_url())
+        
+        return context
+
 
 class JobPostCreateView(LoginRequiredMixin, CompanyRequiredMixin, CreateView):
     model = JobPost
@@ -80,13 +97,15 @@ def dashboard(request):
     company = get_object_or_404(
         CompanyProfile.objects.values("name", "user"), user=request.user.id
     )
-    total_jobs = len(jobs)
-    open_jobs = JobPost.objects.opened.filter(publisher=request.user).count()
+    open_jobs = JobPost.objects.filter(publisher=request.user, status="opened").count()
+    total_applicants = Application.objects.filter(
+        job_post__publisher=request.user
+    ).count()
     context = {
         "jobs": jobs,
         "company": company,
-        "total_jobs": total_jobs,
         "open_jobs": open_jobs,
+        "total_applicants": total_applicants,
     }
     return render(request, "dashboard.html", context)
 

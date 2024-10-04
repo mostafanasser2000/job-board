@@ -35,7 +35,7 @@ def transform_date(value):
             return f"{int(hours)} hours ago"
         if total_seconds >= SECONDS_IN_MINUTE:
             minutes = total_seconds // SECONDS_IN_MINUTE
-            return f"{minutes} minutes ago"
+            return f"{int(minutes)} minutes ago"
         return f"{int(total_seconds)} seconds ago"
     except (AttributeError, TypeError):
         return ""

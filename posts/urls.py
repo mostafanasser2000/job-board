@@ -6,7 +6,6 @@ urlpatterns = [
     path("search/", views.JobPostListView.as_view(), name="jobs_search"),
     path("new/", views.JobPostCreateView.as_view(), name="job_add"),
     path("dashboard/", views.dashboard, name="dashboard"),
-    # path("applications/", views.user_applications, name="user_applications"),
     path("<slug:slug>/", views.JobPostDetailView.as_view(), name="job_detail"),
     path("<slug:slug>/edit/", views.JobPostUpdateView.as_view(), name="job_edit"),
     path("<slug:slug>/delete/", views.JobPostDeleteView.as_view(), name="job_delete"),

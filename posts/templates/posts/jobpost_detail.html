@@ -1,6 +1,7 @@
 {% extends "base.html" %} 
 {% load static %} 
 {% load posts_tags %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="container-xxl py-5 card">
   <div class="container">
@@ -16,13 +17,7 @@
           <div class="text-start ps-4">
             <div class="mb-4">
               <h3 class="m-0">{{ job.title }}</h3>
-              <small
-                ><strong
-                  ><a href="" class="nav-link m-0 p-0"
-                    >{{ job.publisher }}</a
-                  ></strong
-                ></small
-              >
+              <small><strong><a href="{% url 'company_profile' job.publisher.username%}" class="nav-link m-0 p-0">{{ job.publisher.companyprofile.str_name}}</a></strong></small>
             </div>
             <span class="text-truncate me-3">
               <i class="fa fa-map-marker-alt text-primary me-2"></i>{{job.location }}
@@ -65,39 +60,22 @@
           {% else %}
             <div class="">
               <h4 class="mb-4">Apply For The Job</h4>
-                <form>
+                <form method="POST" enctype="multipart/form-data" action="{% url 'job_apply' job.slug %}">
                     <div class="row g-3">
-                        <div class="col-12 col-sm-6">
-                            <input type="text" class="form-control" placeholder="Your Name">
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <input type="email" class="form-control" placeholder="Your Email">
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <input type="text" class="form-control" placeholder="Portfolio Website">
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <input type="file" class="form-control bg-white" id="resume">
-                        </div>
+                        {% csrf_token %}
+                        {{form|crispy}}
                         <div class="col-12">
-                            <textarea class="form-control" rows="5" placeholder="Coverletter"></textarea>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-primary w-100" type="submit">Apply Now</button>
+                            <input type="submit"class="btn btn-primary w-100" value="Apply Now" />
                         </div>
                     </div>
                 </form>
               </div>
           {% endif %}
-          
-         
          {% endif %}
        
       </div>
       <div class="col-lg-4">
-        <div class="bg-light rounded p-5 mb-4 card">
-                  <!-- share job -->
-        </div>
+          {% include "extra/share_buttons.html" with job=job full_url=full_url%}
         <div class="bg-light rounded p-5 mb-4 card">
           <h4 class="mb-4">Job Summary</h4>
           <p>

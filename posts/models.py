@@ -13,25 +13,11 @@ from django.db.models import Manager
 
 
 class JobPostManager(Manager):
-    @property
     def opened(self):
         return self.filter(status="opened")
 
-    @property
     def closed(self):
         return self.filter(status="closed")
-
-
-def upload_resume(instance, filename):
-    return f"resumes/{instance.applicant.username}/{filename}"
-
-
-def validate_resume_file_extension(value):
-    valid_extensions = [".pdf", ".doc", ".docx"]
-    if not any(value.name.endswith(ext) for ext in valid_extensions):
-        raise ValidationError(
-            "Unsupported file extension. Please upload a PDF, DOC, or DOCX file."
-        )
 
 
 class JobPost(BaseModel):
@@ -112,8 +98,10 @@ class JobPost(BaseModel):
     def location(self):
         return self.country.name or "Fully Remote"
 
-    @property
+    
     def is_open(self):
         return self.status == "opened"
 
 
+    def applications_count(self):
+        return self.applications.count()
