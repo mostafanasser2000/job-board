@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4">
+        <i class="fas fa-file-alt me-2"></i>Application Details
+      </h2>
+      
+      <div class="row mb-3">
+        <div class="col-md-3"><strong><i class="fas fa-briefcase me-2"></i>Job:</strong></div>
+        <div class="col-md-9">
+          <a href="{{ application.job_post.get_absolute_url }}" class="text-decoration-none">
+            {{ application.job_post.title }}
+          </a>
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-md-3"><strong><i class="fas fa-user me-2"></i>Applicant:</strong></div>
+        <div class="col-md-9">{{ application.applicant.username }}</div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-md-3"><strong><i class="fas fa-info-circle me-2"></i>Status:</strong></div>
+        <div class="col-md-9">
+          {% if application.status == 'pending' %}
+          <span class="badge bg-warning text-dark">
+        {% elif application.status == 'selected' %}
+          <span class="badge bg-success">
+        {% elif application.status == 'rejected' %}
+          <span class="badge bg-danger">
+        {% else %}
+          <span class="badge bg-secondary">
+        {% endif %}
+          {{ application.get_status_display }}
+        </span>
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-md-3"><strong><i class="fas fa-envelope me-2"></i>Cover Letter:</strong></div>
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-body">
+              {{ application.cover_letter|linebreaks }}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-md-3"><strong><i class="fas fa-file-pdf me-2"></i>Resume:</strong></div>
+        <div class="col-md-9">
+          <a href="{{ application.resume.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-download me-2"></i>Download
+          </a>
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        <div class="col-md-3"><strong><i class="fas fa-calendar-alt me-2"></i>Applied on:</strong></div>
+        <div class="col-md-9">{{ application.created|date:"M d, Y" }}</div>
+      </div>
+      
+      {% if user == application.job_post.publisher %}
+        <form method="post" action="{% url 'application_update' application.job_post.slug application.applicant.username %}" class="mt-4">
+          {% csrf_token %}
+          <div class="input-group">
+            <select name="status" class="form-select">
+              <option value="selected" {% if application.status == 'selected' %}selected{% endif %}>Selected</option>
+              <option value="rejected" {% if application.status == 'rejected' %}selected{% endif %}>Rejected</option>
+            </select>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-sync-alt me-2"></i>Update Status
+            </button>
+          </div>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
