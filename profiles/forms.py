@@ -25,6 +25,12 @@ class UserProfileForm(forms.ModelForm):
             ),
         }
 
+    def clean_image(self):
+        image = self.cleaned_data.get("image")
+        if image and image.size > 10 * 1024 * 1024:
+            raise forms.ValidationError("image file size should be 10MB or less")
+        return image
+
 
 class CompanyProfileForm(forms.ModelForm):
     class Meta:
@@ -36,6 +42,12 @@ class CompanyProfileForm(forms.ModelForm):
             "industries": Select2MultipleWidget,
             "founded_at": forms.DateInput(attrs={"type": "date"}),
         }
+
+    def clean_image(self):
+        image = self.cleaned_data.get("image")
+        if image and image.size > 10 * 1024 * 1024:
+            raise forms.ValidationError("image file size should be 10MB or less")
+        return image
 
 
 class EducationForm(forms.ModelForm):

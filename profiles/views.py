@@ -42,7 +42,7 @@ class UserProfileMixin:
 class CompanyProfileMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["open_jobs"] = JobPost.objects.opened.filter(
+        context["open_jobs"] = JobPost.objects.opened().filter(
             publisher=self.object.user
         )[:5]
         return context

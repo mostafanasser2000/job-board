@@ -24,6 +24,9 @@
                         {% if profile.country %}
                             <li><i class="fas fa-map-marker-alt me-2"></i> {{ profile.country.name }}</li>
                         {% endif %}
+                        {% if profile.phone_number%}
+                          <li><i class="fa-solid fa-phone me-2"></i> {{ profile.phone_number }}</li>
+                        {%endif%}
                         {% if profile.contact_email %}
                             <li><i class="fas fa-envelope me-2"></i> {{ profile.contact_email }}</li>
                         {% endif %}
@@ -31,7 +34,7 @@
                             <li><i class="fas fa-venus-mars me-2"></i> {{ profile.get_gender_display }}</li>
                         {% endif %}
                         {% if profile.military_status %}
-                            <li><i class="fas fa-shield-alt me-2"></i> Military Status: {{ profile.get_military_status_display }}</li>
+                            <li><i class="fas fa-shield-alt me-2"></i> {{ profile.get_military_status_display }}</li>
                         {% endif %}
                     </ul>
                     <div class="social-links mt-2 card p-2 flex flex-row flex-wrap">

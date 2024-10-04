@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
-from django.core.validators import URLValidator
+from django.core.validators import URLValidator, RegexValidator
 from core import choices_utils
 from core.models import BaseModel, Industry, Skill, Country
 from django.core.exceptions import ValidationError
@@ -26,7 +26,13 @@ class Profile(BaseModel):
         blank=True,
     )
     contact_email = models.EmailField(null=True, blank=True)
-
+    phone_regex = RegexValidator(
+        regex=choices_utils.PHONE_REGEX,
+        message="Phone number must be entered with country code like '+20123456789'. Up to 15 digits allowed.",
+    )
+    phone_number = models.CharField(
+        max_length=17, blank=True, null=True, validators=[phone_regex]
+    )
     facebook_url = models.URLField(validators=[URLValidator], null=True, blank=True)
     twitter_url = models.URLField(validators=[URLValidator], null=True, blank=True)
     linkedin_url = models.URLField(validators=[URLValidator], null=True, blank=True)
@@ -37,11 +43,11 @@ class Profile(BaseModel):
 
     def __str__(self):
         return f"{self.name or self.user.username} Profile"
-    
+
     def get_absolute_url(self):
         url = "company_profile" if user.is_company else "user_profile"
         return reverse(url, kwargs={"username": self.user.username})
-    
+
     def get_social_links(self):
         return {
             field.name.split("_url")[0]: getattr(self, field.name)
@@ -53,11 +59,12 @@ class Profile(BaseModel):
     def logo(self):
         if self.image:
             return self.image.url
-        return f"{'static/imgs/logo.svg' if self.user.is_company else 'static/imgs/avatar.png'}"
+        return f"{'/static/imgs/logo.svg' if self.user.is_company else '/static/imgs/avatar.png'}"
 
     @property
     def str_name(self):
         return f"{self.name or self.user.username}"
+
 
 class UserProfile(Profile):
     date_of_birth = models.DateField(null=True, blank=True)
