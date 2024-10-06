@@ -10,6 +10,11 @@ class Manager(BaseUserManager):
 
         email = self.normalize_email(email)
         username = email.split("@")[0]
+        i = 0
+        while CustomUser.objects.filter(username=username).exists():
+            i += 1
+        if i:
+            username = username + str("i")
         user = self.model(email=email, username=username, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -36,4 +41,3 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
