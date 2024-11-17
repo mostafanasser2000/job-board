@@ -8,7 +8,8 @@ done
 
 echo "PostgresSQL started"
 
-python manage.py flush --no-input
+# be careful the below command will remove everything from the database run rebuild container every time
+# python manage.py flush --no-input 
 python manage.py migrate
 python3 manage.py populate_data --industry industry.txt --country country.txt --skills skills.txt --currency currency.txt
 
